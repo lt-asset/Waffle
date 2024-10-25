@@ -1,12 +1,11 @@
 import torch
 import os
 from PIL import Image
-from transformers import AutoProcessor
+from transformers import AutoProcessor, AutoModelForCausalLM
 from transformers.image_utils import to_numpy_array, PILImageResampling, ChannelDimension
 from transformers.image_transforms import resize, to_channel_dimension_format
 import time
-from VLM_WebSight import modeling_web
-from VLM_WebSight.generation_utils import TreeBuilder
+from utils import TreeBuilder
 import traceback
 
 def convert_to_rgb(image):
@@ -41,15 +40,13 @@ torch.cuda.manual_seed_all(42)
 
 DEVICE = torch.device("cuda:0")
 PROCESSOR = AutoProcessor.from_pretrained(
-    "HuggingFaceM4/VLM_WebSight_finetuned",
+    "lt-asset/Waffle_VLM_WebSight",
 )
-web_attention_range = 2
-MODEL = modeling_web.VMistralForVisionText2Text.from_pretrained(
-    f"Your finetuned model path here",
-    torch_dtype=torch.bfloat16,
-).to(DEVICE)
+MODEL = AutoModelForCausalLM.from_pretrained("lt-asset/Waffle_VLM_WebSight", torch_dtype=torch.bfloat16, trust_remote_code=True).to(DEVICE)
+assert MODEL.config.web_attention_range == 2, "Waffle_VLM_WebSight is trained with hierarchical attention applied to 2 / 8 heads"
+# use 2/8 = 1/4 attention heads for hierarchical attention (as described in paper)
+MODEL.eval()
 
-MODEL.config.update({"web_attention_range": web_attention_range})
 image_seq_len = MODEL.config.perceiver_config.resampler_n_latents
 BOS_TOKEN = PROCESSOR.tokenizer.bos_token
 BAD_WORDS_IDS = PROCESSOR.tokenizer(["<image>", "<fake_token_around_image>"], add_special_tokens=False).input_ids
