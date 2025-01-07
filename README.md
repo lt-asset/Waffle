@@ -4,7 +4,7 @@ We develope WAFFLE, a fine-tuning approach to train multi-modal LLM (MLLM) to ge
 ## Updates:
 * 10/24/2024: Our preprint avaiable at: [preprint](https://arxiv.org/abs/2410.18362)
 * 10/24/2024: Our code (keep maintaining) avaiable at: [code](https://github.com/lt-asset/Waffle)
-* 10/24/2024: Our fine-tuned Waffle_VLM_WebSight (7B), using DoRA, is released at: [lt-asset/Waffle_VLM_WebSight](https://huggingface.co/lt-asset/Waffle_VLM_WebSight)
+* 10/24/2024: Our fine-tuned Waffle_VLM_WebSight (7B), using DoRA, is released at: [lt-asset/Waffle_VLM_WebSight](https://huggingface.co/lt-asset/Waffle_VLM_WebSight), the base checkpoint is released by HuggingFaceM4, available via this [link](https://huggingface.co/HuggingFaceM4/VLM_WebSight_finetuned).
 
 ## Dependency
 - peft               0.11.1
