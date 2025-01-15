@@ -58,3 +58,8 @@ python render_html.py --html_path examples/example-495.html --image_path example
       url={https://arxiv.org/abs/2410.18362}, 
 }
 ```
+
+## License
+The model is built on top of [VLM_WebSight_finetuned](https://huggingface.co/HuggingFaceM4/VLM_WebSight_finetuned). As such, users should comply with the licenses of these models.
+
+The DoRA weights we trained are integrated with the original model's weights to produce the final model. We release the final model's weights under the Apache-2.0 license.
